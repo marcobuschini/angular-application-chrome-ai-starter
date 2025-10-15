@@ -6,12 +6,20 @@ import {
   MatSnackBarConfig,
   MatSnackBarModule,
 } from '@angular/material/snack-bar'
+import { MatExpansionModule } from '@angular/material/expansion'
 
 @Component({
   selector: 'app-root',
   styleUrls: ['./app.component.css'],
   templateUrl: './app.component.html',
-  imports: [MatCardModule, MatButtonModule, MatSnackBarModule],
+  imports: [
+    MatCardModule,
+    MatButtonModule,
+    MatSnackBarModule,
+    MatExpansionModule,
+  ],
+  standalone: true,
+  providers: [MatSnackBar],
 })
 export class AppComponent {
   public title = 'frontend'
