@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core'
+import { Component, inject, signal } from '@angular/core'
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
 import {
@@ -7,6 +7,8 @@ import {
   MatSnackBarModule,
 } from '@angular/material/snack-bar'
 import { MatExpansionModule } from '@angular/material/expansion'
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
+import { Clipboard } from '@angular/cdk/clipboard'
 
 export interface AdventureType {
   title: string
@@ -29,6 +31,7 @@ export interface Setting {
     MatCardModule,
     MatButtonModule,
     MatSnackBarModule,
+    MatSlideToggleModule,
     MatExpansionModule,
   ],
   standalone: true,
@@ -36,11 +39,9 @@ export interface Setting {
 })
 export class AppComponent {
   public title = 'frontend'
-  public snackbar: MatSnackBar
-
-  public constructor() {
-    this.snackbar = inject(MatSnackBar)
-  }
+  public snackbar = inject(MatSnackBar)
+  public selectedAdventureTypes = signal<AdventureType[]>([])
+  public selectedSettings = signal<string[]>([])
 
   public adventureTypes: AdventureType[] = [
     {
@@ -178,15 +179,68 @@ export class AppComponent {
     },
   ]
 
-  public ok(): void {
-    this.snackbar.open('You clicked Ok', null, {
-      duration: 1500,
-    } as MatSnackBarConfig)
+  public allSettings: Setting[] = [
+    ...this.classicSettings,
+    ...this.uniqueSettings,
+    ...this.twistSettings,
+  ]
+
+  private _clipboard: Clipboard = inject(Clipboard)
+
+  public constructor() {}
+
+  public isAdventureTypeSelected(title: string): boolean {
+    return this.selectedAdventureTypes().some((adv) => adv.title === title)
   }
 
-  public cancel(): void {
-    this.snackbar.open('You clicked Cancel', null, {
-      duration: 1500,
-    } as MatSnackBarConfig)
+  public selectAdventureType(adv: AdventureType): void {
+    const current = this.selectedAdventureTypes()
+    if (this.isAdventureTypeSelected(adv.title)) {
+      this.selectedAdventureTypes.set(
+        current.filter((a) => a.title !== adv.title)
+      )
+    } else {
+      this.selectedAdventureTypes.set([...current, adv])
+    }
+  }
+
+  public isSettingSelected(title: string): boolean {
+    return this.selectedSettings().some((s) => s === title)
+  }
+
+  public selectSetting(title: string): void {
+    const current = this.selectedSettings()
+    if (this.isSettingSelected(title)) {
+      this.selectedSettings.set(current.filter((s) => s !== title))
+    } else {
+      this.selectedSettings.set([...current, title])
+    }
+  }
+
+  public generateAdventure(): void {
+    let prompt =
+      'Create a Dungeons & Dragons adventure with the following elements:\n\n'
+    prompt += 'Adventure Types:\n'
+    this.selectedAdventureTypes().forEach((adv) => {
+      prompt += `- ${adv.title}: ${adv.description}\n`
+    })
+    prompt += '\nSettings:\n'
+    this.selectedSettings().forEach((setting) => {
+      prompt += `- ${setting}: ${this._getSettingDescription(setting)}\n`
+    })
+    prompt +=
+      '\nThe adventure should be engaging and suitable for a Dungeons & Dragons game. Provide a brief overview, key locations, main NPCs, and potential plot hooks.'
+    this._clipboard.copy(prompt)
+    const config: MatSnackBarConfig = { duration: 3000 }
+    this.snackbar.open(
+      'Adventure prompt copied to clipboard, paste it into your favorite AI tool!',
+      'Close',
+      config
+    )
+  }
+
+  private _getSettingDescription(title: string): string {
+    const setting = this.allSettings.find((s) => s.title === title)
+    return setting ? setting.description : 'No description available.'
   }
 }

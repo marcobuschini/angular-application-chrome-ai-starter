@@ -11,7 +11,9 @@
       @for (adv of adventureTypes; track adv.title) {
         <mat-expansion-panel>
           <mat-expansion-panel-header>
-            <mat-panel-title>{{ adv.title }}</mat-panel-title>
+            <mat-panel-title>
+              {{ adv.title }}
+            </mat-panel-title>
           </mat-expansion-panel-header>
           <dl>
             <dt>Description:</dt>
@@ -23,6 +25,12 @@
             <dt>Suitable for:</dt>
             <dd>{{ adv.suitable }}</dd>
           </dl>
+          <mat-slide-toggle
+            [checked]="isAdventureTypeSelected(adv.title)"
+            (change)="selectAdventureType(adv)"
+          >
+            Use!
+          </mat-slide-toggle>
         </mat-expansion-panel>
       }
     </mat-accordion>
@@ -32,9 +40,17 @@
       @for (setting of classicSettings; track setting.title) {
         <mat-expansion-panel>
           <mat-expansion-panel-header>
-            <mat-panel-title>{{ setting.title }}</mat-panel-title>
+            <mat-panel-title>
+              {{ setting.title }}
+            </mat-panel-title>
           </mat-expansion-panel-header>
           <div>{{ setting.description }}</div>
+          <mat-slide-toggle
+            [checked]="isSettingSelected(setting.title)"
+            (change)="selectSetting(setting.title)"
+          >
+            Use!
+          </mat-slide-toggle>
         </mat-expansion-panel>
       }
     </mat-accordion>
@@ -43,9 +59,17 @@
       @for (setting of uniqueSettings; track setting.title) {
         <mat-expansion-panel>
           <mat-expansion-panel-header>
-            <mat-panel-title>{{ setting.title }}</mat-panel-title>
+            <mat-panel-title>
+              {{ setting.title }}
+            </mat-panel-title>
           </mat-expansion-panel-header>
           <div>{{ setting.description }}</div>
+          <mat-slide-toggle
+            [checked]="isSettingSelected(setting.title)"
+            (change)="selectSetting(setting.title)"
+          >
+            Use!
+          </mat-slide-toggle>
         </mat-expansion-panel>
       }
     </mat-accordion>
@@ -54,11 +78,24 @@
       @for (setting of twistSettings; track setting.title) {
         <mat-expansion-panel>
           <mat-expansion-panel-header>
-            <mat-panel-title>{{ setting.title }}</mat-panel-title>
+            <mat-panel-title>
+              {{ setting.title }}
+            </mat-panel-title>
           </mat-expansion-panel-header>
           <div>{{ setting.description }}</div>
+          <mat-slide-toggle
+            [checked]="isSettingSelected(setting.title)"
+            (change)="selectSetting(setting.title)"
+          >
+            Use!
+          </mat-slide-toggle>
         </mat-expansion-panel>
       }
     </mat-accordion>
   </mat-card-content>
+  <mat-card-actions>
+    <button mat-button color="primary" (click)="generateAdventure()">
+      Create adventure!
+    </button>
+  </mat-card-actions>
 </mat-card>
