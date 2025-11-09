@@ -43,3 +43,15 @@ mat-card-actions {
   justify-content: flex-end;
   gap: 1em;
 }
+
+.selected-item {
+  background-color: #e8f5e9; /* Un verde chiaro per indicare la selezione */
+}
+
+.mat-expansion-panel-header.selected-item
+  .mat-expansion-panel-header-title
+  > mat-icon {
+  margin-right: 8px;
+  color: green;
+  font-weight: bold;
+}

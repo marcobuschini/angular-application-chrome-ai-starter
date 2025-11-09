@@ -1,6 +1,14 @@
-body {
-  margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+@use '@angular/material' as mat;
+
+html {
+  color-scheme: light dark;
+  @include mat.theme(
+    (
+      color: mat.$violet-palette,
+      typography: Roboto,
+      density: 0,
+    )
+  );
 }
 
 // global overrides
@@ -8,9 +16,12 @@ html,
 body {
   height: 100% !important;
 }
+
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
 }
 
 mat-card,

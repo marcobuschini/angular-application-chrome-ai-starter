@@ -9,6 +9,7 @@ import {
 import { MatExpansionModule } from '@angular/material/expansion'
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { Clipboard } from '@angular/cdk/clipboard'
+import { MatIconModule } from '@angular/material/icon'
 
 export interface AdventureType {
   title: string
@@ -33,6 +34,7 @@ export interface Setting {
     MatSnackBarModule,
     MatSlideToggleModule,
     MatExpansionModule,
+    MatIconModule,
   ],
   standalone: true,
   providers: [MatSnackBar],

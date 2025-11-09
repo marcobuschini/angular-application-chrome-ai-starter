@@ -10,8 +10,13 @@
     <mat-accordion>
       @for (adv of adventureTypes; track adv.title) {
         <mat-expansion-panel>
-          <mat-expansion-panel-header>
+          <mat-expansion-panel-header
+            [class.selected-item]="isAdventureTypeSelected(adv.title)"
+          >
             <mat-panel-title>
+              @if (isAdventureTypeSelected(adv.title)) {
+                &checkmark;
+              }
               {{ adv.title }}
             </mat-panel-title>
           </mat-expansion-panel-header>
@@ -39,8 +44,13 @@
     <mat-accordion>
       @for (setting of classicSettings; track setting.title) {
         <mat-expansion-panel>
-          <mat-expansion-panel-header>
+          <mat-expansion-panel-header
+            [class.selected-item]="isSettingSelected(setting.title)"
+          >
             <mat-panel-title>
+              @if (isSettingSelected(setting.title)) {
+                &checkmark;
+              }
               {{ setting.title }}
             </mat-panel-title>
           </mat-expansion-panel-header>
@@ -58,8 +68,13 @@
     <mat-accordion>
       @for (setting of uniqueSettings; track setting.title) {
         <mat-expansion-panel>
-          <mat-expansion-panel-header>
+          <mat-expansion-panel-header
+            [class.selected-item]="isSettingSelected(setting.title)"
+          >
             <mat-panel-title>
+              @if (isSettingSelected(setting.title)) {
+                &checkmark;
+              }
               {{ setting.title }}
             </mat-panel-title>
           </mat-expansion-panel-header>
@@ -77,8 +92,13 @@
     <mat-accordion>
       @for (setting of twistSettings; track setting.title) {
         <mat-expansion-panel>
-          <mat-expansion-panel-header>
+          <mat-expansion-panel-header
+            [class.selected-item]="isSettingSelected(setting.title)"
+          >
             <mat-panel-title>
+              @if (isSettingSelected(setting.title)) {
+                &checkmark;
+              }
               {{ setting.title }}
             </mat-panel-title>
           </mat-expansion-panel-header>
@@ -95,7 +115,7 @@
   </mat-card-content>
   <mat-card-actions>
     <button mat-button color="primary" (click)="generateAdventure()">
-      Create adventure!
+      Create adventure prompt!
     </button>
   </mat-card-actions>
 </mat-card>
