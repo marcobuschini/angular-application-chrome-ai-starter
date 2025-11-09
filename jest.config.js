@@ -4,7 +4,11 @@ module.exports = {
   testEnvironment: 'jsdom',
   verbose: true,
   collectCoverage: true,
-  coveragePathIgnorePatterns: ['/node_modules/', '/test/assets/'],
+  coveragePathIgnorePatterns: [
+    '/node_modules/',
+    '/test/assets/',
+    '/jest-global-mocks.ts',
+  ],
   reporters: [
     'default',
     [
